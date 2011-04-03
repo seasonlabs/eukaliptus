@@ -1,20 +1,17 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    git (1.2.5)
-    jeweler (1.5.2)
-      bundler (~> 1.0.0)
-      git (>= 1.2.5)
-      rake
+    json (1.5.1)
+    koala (1.0.0.beta2)
+      json (>= 1.0)
+      multipart-post (>= 1.0)
     minitest (2.0.2)
-    rake (0.8.7)
-    rcov (0.9.9)
+    multipart-post (1.1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   bundler (~> 1.0.0)
-  jeweler (~> 1.5.2)
+  koala (~> 1.0.0.beta)
   minitest
-  rcov

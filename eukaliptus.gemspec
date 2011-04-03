@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "eukalipta/version"
+require "eukaliptus/version"
 
 Gem::Specification.new do |s|
   s.name        = "eukaliptus"
-  s.version     = Eukalipta::VERSION
+  s.version     = Eukaliptus::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["season", "victorcoder"]
   s.email       = ["victorcoder@gmail.com"]
@@ -18,4 +18,6 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
+  
+  s.add_dependency 'koala', '~> 1.0.0.beta'
 end

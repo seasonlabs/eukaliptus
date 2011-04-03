@@ -1,0 +1,16 @@
+development: &FACEBOOK_BASE
+  api_key: 
+  secret_key: 
+  app_id: 
+  host: http://localhost:3000
+  canvas: http://apps.facebook.com/
+  
+test:
+  <<: *FACEBOOK_BASE
+
+production:
+  api_key: 
+  secret_key: 
+  app_id: 
+  host: 
+  canvas: http://apps.facebook.com/
