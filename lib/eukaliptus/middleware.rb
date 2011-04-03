@@ -11,7 +11,7 @@ module Eukaliptus
 
       @response.header["P3P"] = 'CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"'
 
-      cookie_fix(env)# if env['PATH_INFO'] == '/cookie_fix'
+      cookie_fix(env) if env['PATH_INFO'] == '/cookie_fix'
 
       @response.finish
     end
@@ -22,18 +22,13 @@ module Eukaliptus
 
       if params['_session_id']
         session = ActiveSupport::JSON.decode(params['_session_id'])
+
+        unless (@request.cookies['fbs_' + Facebook::APP_ID.to_s].present?)
+          session = session.map { |key, value| key.to_s + "=" + value.to_s }.join("&")
+          @response.set_cookie('fbs_' + Facebook::APP_ID.to_s, session)
+        end
+        @response.redirect(params['redirect_to'], 200)
       end
-
-      unless (@request.cookies['fbs_' + Facebook::APP_ID.to_s].present?)
-        session = session.map { |key, value| key.to_s + "=" + value.to_s }.join("&")
-        cookies['fbs_' + Facebook::APP_ID.to_s] = session
-      end
-      redirect_to params[:redirect_to] and return
-
-      @response.set_cookie("foo", {:value => "bar"})
-
-
-      @response.status = 200
     end
   end
 end
