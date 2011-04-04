@@ -14,10 +14,12 @@ module Eukaliptus
       load File.join(File.dirname(__FILE__), '../tasks/facebook.rake')
     end
     
-    initializer "eukaliptus.initializer", :after => :after_initialize do |app|
+    initializer "eukaliptus.middleware", :after => :after_initialize do |app|
       #ActionView::Base.send :include, Helper
       app.middleware.use Eukaliptus::Middleware
+    end
 
+    initializer "eukaliptus.koala" do |app|
       config_file = Rails.root.join("config/facebook.yml")
 
       if config_file.file?
@@ -28,6 +30,13 @@ module Eukaliptus
       end
 
       require 'eukaliptus/koala'
+    end
+
+    initializer "eukaliptus.action_view" do |app|
+      ActiveSupport.on_load :action_view do
+        require 'eukaliptus/view_helpers/facebook_helpers'
+        include Eukaliptus::FacebookHelpers
+      end
     end
   end
 end

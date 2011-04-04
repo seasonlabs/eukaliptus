@@ -1,5 +1,5 @@
 module Eukaliptus
-  module FacebookHelper
+  module FacebookHelpers
     def facebook_js
       <<-ALGO
       <div id="fb-root"></div>
