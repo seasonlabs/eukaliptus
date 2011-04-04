@@ -1,7 +1,7 @@
-require 'helper'
+require 'test_helper'
 
 class TestEukaliptus < MiniTest::Unit::TestCase
-  def test_something_for_real
-    flunk "hey buddy, you should probably rename this file and start testing for real"
+  def test_eukaliptus_headers
+    skip "Test P3p header"
   end
 end
