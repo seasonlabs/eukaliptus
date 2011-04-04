@@ -2,8 +2,6 @@ require 'eukaliptus/middleware'
 require 'rails'
 require 'koala'
 
-require 'eukaliptus/view_helpers/facebook_helper'
-
 module Facebook
 end
 
