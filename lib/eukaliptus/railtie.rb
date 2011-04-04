@@ -1,5 +1,7 @@
 require 'eukaliptus/middleware'
 require 'rails'
+require 'koala'
+
 require 'eukaliptus/view_helpers/facebook_helper'
 
 module Facebook
@@ -24,6 +26,8 @@ module Eukaliptus
         Facebook::SECRET = CONFIG['secret_key']
         Facebook::CANVAS = CONFIG['canvas']
       end
+
+      require 'eukaliptus/koala'
     end
   end
 end
