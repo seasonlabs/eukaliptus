@@ -1,9 +1,11 @@
 = Eukaliptus
 
-Eukaliptus is a set of helpers and bug fixes for browsers to help you build Facebook iframe applications or user fan tabs.
+Eukaliptus is a set of helpers and bug fixes for browsers to help you build Facebook iframe applications or fan pages tabs.
+
+It is tightly integrated with the Koala Facebook oauth library, see https://github.com/arsduo/koala
 
 == Copyright
 
-Copyright (c) 2011 victorcoder. See LICENSE.txt for
+Copyright (c) 2011 Season Advertising S.L. and victorcoder. See LICENSE.txt for
 further details.
 
