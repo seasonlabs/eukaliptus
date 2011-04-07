@@ -13,7 +13,9 @@ module Eukaliptus
 
       cookie_fix(env) if env['PATH_INFO'] == '/cookie_fix'
 
-      @response.finish
+      # Issue a "Moved permanently" response with the redirect location
+      
+      #@response.finish
     end
 
     def cookie_fix(env)
@@ -27,7 +29,8 @@ module Eukaliptus
           session = session.map { |key, value| key.to_s + "=" + value.to_s }.join("&")
           @response.set_cookie('fbs_' + Facebook::APP_ID.to_s, session)
         end
-        @response.redirect(params['redirect_to'], 200)
+        #@response.redirect(params['redirect_to'], 301)
+        [301, {"Location" => params['redirect_to']}, 'Redirecting you to the new location...']
       end
     end
   end
