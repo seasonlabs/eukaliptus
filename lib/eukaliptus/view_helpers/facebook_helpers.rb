@@ -35,7 +35,6 @@ module Eukaliptus
 
 
         function fixSession(fbSession, targetUrl) {
-          var m = document.createElement('input');
           $("body").prepend('<form id="fixSession"></form>');
 
           var f = $('form')[0];
