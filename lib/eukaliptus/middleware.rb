@@ -29,10 +29,14 @@ module Eukaliptus
         unless (@request.cookies['fbs_' + Facebook::APP_ID.to_s].present?)
           session = session.map { |key, value| key.to_s + "=" + value.to_s }.join("&")
           @response.set_cookie('fbs_' + Facebook::APP_ID.to_s, session)
+          @response.headers.delete "Content-Type"
+          @response.headers.delete "Content-Length"
+          @response.headers.delete "X-Cascade"
         end
       end
+      @response.redirect((params['redirect_to'] ? params['redirect_to'] : '/'))
 
-      [302, {'Location' => (params['redirect_to'] ? params['redirect_to'] : '/')}, 'Cookie Setted']
+      [302, @response.headers, 'Cookie Setted']
     end
   end
 end
