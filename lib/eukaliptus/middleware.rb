@@ -19,6 +19,11 @@ module Eukaliptus
       end
     end
 
+    # Get POST params and process it to build up the cookie for FB
+    # authentication. Then prepare the response for redirection and
+    # breaks the request workflow setting the cookie at the same time.
+    # This way Safari and other browsers with extra iframe security
+    # gets the cookie set too.
     def cookie_fix(env)
       rack_input = env["rack.input"].read
       params = Rack::Utils.parse_query(rack_input, "&")
@@ -29,11 +34,12 @@ module Eukaliptus
         unless (@request.cookies['fbs_' + Facebook::APP_ID.to_s].present?)
           session = session.map { |key, value| key.to_s + "=" + value.to_s }.join("&")
           @response.set_cookie('fbs_' + Facebook::APP_ID.to_s, session)
-          @response.headers.delete "Content-Type"
-          @response.headers.delete "Content-Length"
-          @response.headers.delete "X-Cascade"
         end
       end
+      
+      @response.headers.delete "Content-Type"
+      @response.headers.delete "Content-Length"
+      @response.headers.delete "X-Cascade"
       @response.redirect((params['redirect_to'] ? params['redirect_to'] : '/'))
 
       [302, @response.headers, 'Cookie Setted']
