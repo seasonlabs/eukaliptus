@@ -1,6 +1,6 @@
 module Eukaliptus
   module FacebookHelpers
-    def facebook_js
+    def facebook_js(perms = %w{email publish_stream})
       <<-ALGO
       <div id="fb-root"></div>
       <script type="text/javascript">
@@ -29,7 +29,7 @@ module Eukaliptus
               } else {
                   //pending to do when not logged in
               }
-            }, {perms:'publish_stream'});
+            }, {perms:'#{perms.join(',')}'});
           }
 
 
