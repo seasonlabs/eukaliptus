@@ -1,3 +1,4 @@
+# coding: utf-8
 module Eukaliptus
   module FacebookHelpers
     def facebook_js(perms = %w{email publish_stream})
@@ -56,6 +57,10 @@ module Eukaliptus
         }
       </script>
       ALGO
+    end
+
+    def invites_js(message='Invite your friends to use your app!')
+      "FB.ui({ method: 'apprequests', message: '#{message}'});"
     end
   end
 end
