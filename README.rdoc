@@ -1,11 +1,44 @@
 = Eukaliptus
 
-Eukaliptus is a set of helpers and bug fixes for browsers to help you build Facebook iframe applications or fan pages tabs.
+Eukaliptus is a set of helpers to help you build Facebook applications, fan pages tabs or integrate Facebook in your web site.
 
-It is tightly integrated with the Koala Facebook oauth library, see https://github.com/arsduo/koala
+It generates the necessary JS code to perform request to Eukaliptus Rack middleware that fixes a lot of problems involved in running iframe applications inside facebook but it is also useful for Facebook connect apps.
+
+We provide integration with two authentication methods out of the box, Koala Facebook library, see https://github.com/arsduo/koala and the combination of Omniauth + Devise.
+
+== Installation (Rails)
+
+Require it in your Gemfile
+
+    gem 'eukaliptus', :git => 'git://github.com/seasonlabs/eukaliptus.git'
+
+Update your bundle
+
+    $ bundle install
+    
+Run the generator
+
+    $ rails generate eukaliptus:config
+
+Go to http://www.facebook.com/developers/createapp.php and create a new Facebook app, configure it and then fill up the file  config/facebook.yml with the details of you newly created app.
+
+You are now ready to begin using Eukaliptus.
+
+== Requirements
+
+jQuery library for the front-end.
+Your rails application must be using jQuery as it will be the default JS library for Rails from 3.1 and beyond.
+
+== Getting started
+
+Just behind the <body> tag in your application.html.erb write:
+    
+    <%= facebook_js.html_safe %>
+    
+This generates the necessary JS code to perform request to Eukaliptus that fixes cookies security problems involved in running iframe applications in Safari and IE6+
 
 == Copyright
 
-Copyright (c) 2011 Season Advertising S.L. and victorcoder. See LICENSE.txt for
-further details.
+Copyright (c) 2011 Season Advertising S.L. http://www.season.es
+See LICENSE.txt for further details.
 
