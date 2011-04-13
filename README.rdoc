@@ -2,7 +2,7 @@
 
 Eukaliptus is a set of helpers to help you build Facebook applications, fan pages tabs or integrate Facebook in your web site.
 
-It generates the necessary JS code to perform request to Eukaliptus Rack middleware that fixes a lot of problems involved in running iframe applications inside facebook but it is also useful for Facebook connect apps.
+It generates the necessary JS code to perform requests to Eukaliptus Rack middleware that fixes a lot of problems involved in running iframe applications inside facebook but it is also useful for Facebook connect apps.
 
 With Eukaliptus and Koala it's very easy to set-up a Facebook connect application with JS authentication that works in all browsers in less that 5 minutes.
 
