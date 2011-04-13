@@ -4,6 +4,10 @@ Eukaliptus is a set of helpers to help you build Facebook applications, fan page
 
 It generates the necessary JS code to perform request to Eukaliptus Rack middleware that fixes a lot of problems involved in running iframe applications inside facebook but it is also useful for Facebook connect apps.
 
+With Eukaliptus and Koala it's very easy to set-up a Facebook connect application with JS authentication that works in all browsers in less that 5 minutes.
+
+It will be a key component of our next product Eukaliptus Core.
+
 We provide integration with two authentication methods out of the box, Koala Facebook library, see https://github.com/arsduo/koala and the combination of Omniauth + Devise.
 
 == Installation (Rails)
@@ -36,6 +40,11 @@ Just behind the <body> tag in your application.html.erb write:
     <%= facebook_js.html_safe %>
     
 This generates the necessary JS code to perform request to Eukaliptus that fixes cookies security problems involved in running iframe applications in Safari and IE6+
+
+Then you can place a link anywhere in your code that gives the user the chance to login with Facebook:
+
+    <%= link_to "Log in with Facebook", "#", :onclick => "login('/redirect/path');" %>
+    
 
 == Copyright
 
