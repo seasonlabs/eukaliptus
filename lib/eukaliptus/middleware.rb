@@ -12,6 +12,9 @@ module Eukaliptus
       # Fixes IE security bug
       @response.header["P3P"] = 'CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"'
 
+      algo = OmniAuth.config
+      foo = Devise.mappings
+
       if env['PATH_INFO'] == '/cookie_fix'
         cookie_fix(env)
       else
@@ -36,11 +39,23 @@ module Eukaliptus
           @response.set_cookie('fbs_' + Facebook::APP_ID.to_s, session)
         end
       end
-      
+
       @response.headers.delete "Content-Type"
       @response.headers.delete "Content-Length"
       @response.headers.delete "X-Cascade"
-      @response.redirect((params['redirect_to'] ? params['redirect_to'] : '/'))
+
+      if defined?(OmniAuth) and defined?(Devise)
+        mappings = Devise.mappings[:user]
+
+        if mappings.controllers.has_key? :omniauth_callbacks
+          path = [mappings.path, 'auth', env["omniauth.strategy"].name.to_s, 'callback'].join('/')
+          @response.redirect(path  + "?redirect_to=#{params['redirect_to']}")
+        else
+          @response.redirect('/' + "?redirect_to=#{params['redirect_to']}")
+        end
+      else
+        @response.redirect((params['redirect_to'] ? params['redirect_to'] : '/'))
+      end
 
       [302, @response.headers, 'Cookie Setted']
     end
