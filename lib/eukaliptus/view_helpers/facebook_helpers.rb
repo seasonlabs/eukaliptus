@@ -2,7 +2,7 @@
 module Eukaliptus
   module FacebookHelpers
     def facebook_js(perms = %w{email publish_stream})
-      <<-ALGO
+      <<-DATA
       <div id="fb-root"></div>
       <script type="text/javascript">
           window.fbAsyncInit = function() {
@@ -56,7 +56,7 @@ module Eukaliptus
           f.submit();
         }
       </script>
-      ALGO
+      DATA
     end
 
     def invites_js(message='Invite your friends to use your app!')
