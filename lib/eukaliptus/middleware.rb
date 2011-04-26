@@ -12,9 +12,6 @@ module Eukaliptus
       # Fixes IE security bug
       @response.header["P3P"] = 'CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"'
 
-      algo = OmniAuth.config
-      foo = Devise.mappings
-
       if env['PATH_INFO'] == '/cookie_fix'
         cookie_fix(env)
       else
