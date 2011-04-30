@@ -56,7 +56,7 @@ module Eukaliptus
           f.submit();
         }
       </script>
-      DATA
+      DATA.html_safe
     end
 
     def invites_js(message='Invite your friends to use your app!')
