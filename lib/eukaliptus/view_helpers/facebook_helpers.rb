@@ -56,6 +56,8 @@ module Eukaliptus
           f.submit();
         }
       </script>
+      DATA
+      
       DATA.html_safe
     end
 
