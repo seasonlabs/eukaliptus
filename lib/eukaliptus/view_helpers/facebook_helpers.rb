@@ -23,14 +23,17 @@ module Eukaliptus
             document.getElementById('fb-root').appendChild(e);
           }());
 
-          var login = function(targetUrl) {
+          var login = function(targetUrl, perms) {
+            if (perms == null) {
+              perms = "#{perms.join(',')}"
+            }
             FB.login(function(response) {
               if (response.session) {
                   fixSession(JSON.stringify(response.session), targetUrl);
               } else {
                   //pending to do when not logged in
               }
-            }, {perms:'#{perms.join(',')}'});
+            }, {perms: perms});
           }
 
 
