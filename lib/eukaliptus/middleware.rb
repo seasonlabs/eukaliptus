@@ -5,7 +5,14 @@ module Eukaliptus
     end
 
     def call(env)
-      @request = Rack::Request.new(env)
+      @request = Request.new(env)
+
+      # Catch and convert POST from facebook
+      if @request.facebook?
+        env["facebook.original_method"] = env["REQUEST_METHOD"]
+        env["REQUEST_METHOD"] = 'GET'
+      end
+
       status, headers, body = @app.call(env)
       @response = Rack::Response.new body, status, headers
 
@@ -25,9 +32,8 @@ module Eukaliptus
     # This way Safari and other browsers with extra iframe security
     # gets the cookie set too.
     def cookie_fix(env)
-      rack_input = env["rack.input"].read
-      params = Rack::Utils.parse_query(rack_input, "&")
-
+      params = @request.params
+      
       if params['_session_id']
         session = ActiveSupport::JSON.decode(params['_session_id'])
 

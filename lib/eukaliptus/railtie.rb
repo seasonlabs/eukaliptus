@@ -1,6 +1,7 @@
-require 'eukaliptus/middleware'
 require 'rails'
 require 'koala'
+require 'eukaliptus/request'
+require 'eukaliptus/middleware'
 
 module Facebook
 end
