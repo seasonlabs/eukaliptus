@@ -51,7 +51,7 @@ module Eukaliptus
         mappings = Devise.mappings[:user]
 
         if mappings.controllers.has_key? :omniauth_callbacks
-          path = [mappings.path, 'auth', env["omniauth.strategy"].name.to_s, 'callback'].join('/')
+          path = [mappings.path, 'auth', :facebook.to_s, 'callback'].join('/')
           @response.redirect(path  + "?redirect_to=#{params['redirect_to']}")
         else
           @response.redirect('/' + "?redirect_to=#{params['redirect_to']}")
