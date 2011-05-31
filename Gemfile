@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-gem 'koala', '~> 1.0.0.beta'
+gem 'koala'
 
 group :development do
   gem "minitest", ">= 0", :platforms => :ruby_18
