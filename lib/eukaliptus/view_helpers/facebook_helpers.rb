@@ -7,7 +7,7 @@ module Eukaliptus
     #
     # Use it one time in your layout header or use it in several app places
     # to ask the user for different permissions depending on the context, page, etc.
-    def facebook_js(perms = %w{email publish_stream})
+    def fb_login(perms = %w{email publish_stream})
       js = <<-DATA
 <div id="fb-root"></div>
 <script type="text/javascript">
@@ -70,42 +70,104 @@ module Eukaliptus
       js.html_safe
     end
 
-    # Renders invite dialog request
-    def invites_js(message='Invite your friends to use your app!')
-      "FB.ui({ method: 'apprequests', message: '#{message}'});"
-    end
+    # Function to create a new FB.ui dialog link
+    def fb_ui(name, options ={})
+      callback = options.delete(:callback)
+      callback.gsub!('"', "'")
 
+      data = "FB.ui(#{options.to_json.gsub('"', "'")}, #{callback});"
+      link_to(name, '#', :onclick => data.html_safe)
+    end
+    
     # Create a new wall post
     # You can use it directly in your templates or call it from inside your helpers:
     #
     # module MyHelper
     #   def post_something_to_wall(something)
-    #     link_to_post_to_wall('Publish this great thing to wall!', :name => Something.name)
+    #     fb_post_to_wall('Publish this great thing to wall!', :name => Something.name)
     #   end
     # end
     #
-    # The options are the same than in Facebook feed post passed in a Hash
+    # The options are the same than in Facebook feed post passed as Hash
     # see: http://developers.facebook.com/docs/reference/javascript/FB.ui/
-    def link_to_post_to_wall(name, options = {})
+    #
+    # :callback
+    # JS callback function to do somethink with the data
+    def fb_post_to_wall(name = 'Post to wall', options = {})
       options = {
         :method => 'feed',
         :callback => 'function(response) {}'
       }.merge(options)
 
-      data= <<-DATA
-FB.ui(
- {
-   method: '#{options[:method]}',
-   name: '#{options[:name]}',
-   link: '#{options[:link]}',
-   picture: '#{options[:picture]}',
-   caption: '#{options[:caption]}',
-   description: '#{options[:description]}'
- }, #{options[:callback]}
-);
-        DATA
+      fb_ui name, options
+    end
 
-        link_to(name, '#', :onclick => data.html_safe)
-      end
+    # Options
+    #
+    # :id
+    # Required. The ID or username of the target user to add as a friend.
+    #
+    # :callback
+    # JS callback function to do somethink with the data
+    def fb_add_friend(name = 'Add as a friend', options = {})
+      options = {
+        :method => 'friends',
+        :callback => 'function(response) {}'
+      }.merge(options)
+
+      fb_ui name, options
+    end
+
+    # Options
+    #
+    # :message
+    # The request the receiving user will see. It appears as a question posed by the sending user.
+    # The maximum length is 255 characters.
+    #
+    # :to
+    # A user ID or username. Must be a friend of the sender.
+    # If this is specified, the user will not have a choice of recipients.
+    # If this is omitted, the user will see a friend selector and will be able to select a maximum of 50 recipients.
+    #
+    # :data
+    # Optional, additional data you may pass for tracking. This will be stored as part of the request objects created.
+    #
+    # :title
+    # Optional, the title for the friend selector dialog. Maximum length is 50 characters.
+    #
+    # :callback
+    # JS callback function to do somethink with the data
+    def fb_app_request(name = 'Invite to use this application', options = {})
+      options = {
+        :method => 'apprequests',
+        :message => 'Invite your friends to use your app!',
+        :callback => 'function(response) {}'
+      }.merge(options)
+
+      fb_ui name, options
+    end
+
+    # Options
+    #
+    # :credits_purchase
+    # Whether it is a Credits purchase dialog or not
+    #
+    # :order_info
+    # The internal key of the item you are selling.
+    # IT's required in case credits_purchase is false and should only be meaningful to you.
+    #
+    # :dev_purchase_params
+    # More developer parameters. For details, read http://developers.facebook.com/docs/creditsapi/
+    #
+    # :callback
+    # JS callback function to do somethink with the data
+    def fb_pay(name = 'Buy credits', options = {})
+      options = {
+        :method => 'pay',
+        :callback => 'function(response) {}'
+      }.merge(options)
+
+      fb_ui name, options
+    end
   end
 end
