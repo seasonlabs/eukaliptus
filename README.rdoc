@@ -37,15 +37,18 @@ Your rails application must be using jQuery as it will be the default JS library
 
 Just behind the <body> tag in your application.html.erb write:
     
-    <%= facebook_js %>
+    <%= fb_login %>
     
 This generates the necessary JS code to perform request to Eukaliptus that fixes cookies security problems involved in running iframe applications in Safari and IE6+
 
 Then you can place a link anywhere in your code that gives the user the chance to login with Facebook:
 
     <%= link_to "Log in with Facebook", "#", :onclick => "login('/redirect/path');" %>
-    
 
+== Helpers
+
+Al helpers are namespaced with fb_ prefix you can find the documentation in  this file lib/eukaliptus/view_helpers/facebook_helpers.rb
+    
 == Copyright
 
 Copyright (c) 2011 Season Advertising S.L. http://www.season.es
