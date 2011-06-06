@@ -100,8 +100,7 @@ FB.ui(
    link: '#{options[:link]}',
    picture: '#{options[:picture]}',
    caption: '#{options[:caption]}',
-   description: '#{options[:description]}',
-   message: '#{options[:message]}'
+   description: '#{options[:description]}'
  }, #{options[:callback]}
 );
         DATA
