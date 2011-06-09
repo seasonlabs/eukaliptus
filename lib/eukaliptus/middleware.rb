@@ -60,7 +60,7 @@ module Eukaliptus
         @response.redirect((params['redirect_to'] ? params['redirect_to'] : '/'))
       end
 
-      [302, @response.headers, 'Cookie Setted']
+      [302, @response.headers, ['Cookie Setted']]
     end
   end
 end
