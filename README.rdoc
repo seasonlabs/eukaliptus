@@ -14,7 +14,7 @@ We provide integration with two authentication methods out of the box, Koala Fac
 
 Require it in your Gemfile
 
-    gem 'eukaliptus', :git => 'git://github.com/seasonlabs/eukaliptus.git'
+    gem 'eukaliptus'
 
 Update your bundle
 
