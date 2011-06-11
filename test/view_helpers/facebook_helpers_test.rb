@@ -1,10 +1,9 @@
 require 'test_helper'
 
-decribe FacebookHelpersTest
-  describe "when asked about cheeseburgers" do
+describe "Eukaliptus::FacebookHelpersTest" do
+  describe "when asked about a helper" do
     it "must respond positively" do
       assert true
-      puts "fefer"
     end
   end
 
