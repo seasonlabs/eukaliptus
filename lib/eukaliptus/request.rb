@@ -10,7 +10,7 @@ class Request < ::Rack::Request
   end
 
   def facebook?
-    params[:signed_request].present?
+    params['signed_request'].present?
   end
 
   private
