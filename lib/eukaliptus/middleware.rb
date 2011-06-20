@@ -52,9 +52,9 @@ module Eukaliptus
 
         if mappings.controllers.has_key? :omniauth_callbacks
           path = [mappings.path, 'auth', :facebook.to_s, 'callback'].join('/')
-          @response.redirect(path  + "?redirect_to=#{params['redirect_to']}")
+          @response.redirect(path + "?#{params['redirect_to'].to_query('redirect_to')}")
         else
-          @response.redirect('/' + "?redirect_to=#{params['redirect_to']}")
+          @response.redirect("/?#{params['redirect_to'].to_query('redirect_to')}")
         end
       else
         @response.redirect((params['redirect_to'] ? params['redirect_to'] : '/'))
