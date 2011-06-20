@@ -20,4 +20,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   
   s.add_dependency 'koala', '~> 1.0.0'
+  
+  s.add_development_dependency 'minitest'
+  s.add_development_dependency 'rack-test'
 end
