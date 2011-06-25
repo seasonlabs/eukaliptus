@@ -13,7 +13,10 @@ module Eukaliptus
     #
     # Use it one time in your layout header or use it in several app places
     # to ask the user for different permissions depending on the context, page, etc.
-    def fb_init(perms = %w{email publish_stream}, append_to_init = "")
+    def fb_init(options = {})
+      perms = (options[:perms] || %w{email publish_stream}).join(",")
+      locale = options[:locale] || "es_ES"
+
       js = <<-DATA
 <div id="fb-root"></div>
 <script type="text/javascript">
@@ -33,13 +36,13 @@ module Eukaliptus
     (function() {
       var e = document.createElement('script'); e.async = true;
       e.src = document.location.protocol +
-      '//connect.facebook.net/es_ES/all.js';
+      '//connect.facebook.net/#{locale}/all.js';
       document.getElementById('fb-root').appendChild(e);
     }());
 
     var login = function(targetUrl, perms) {
       if (perms == null) {
-        perms = "#{perms.join(',')}"
+        perms = "#{perms}"
       }
       FB.login(function(response) {
         if (response.session) {
