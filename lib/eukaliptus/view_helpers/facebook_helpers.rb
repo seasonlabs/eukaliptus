@@ -9,10 +9,11 @@ module Eukaliptus
     # the Javascript method.
     #
     # Accepts the permissions that your application needs to work.
+    # Use the second parameter to inject some JS that will be executed in fbAsyncInit.
     #
     # Use it one time in your layout header or use it in several app places
     # to ask the user for different permissions depending on the context, page, etc.
-    def fb_init(perms = %w{email publish_stream})
+    def fb_init(perms = %w{email publish_stream}, append_to_init = "")
       js = <<-DATA
 <div id="fb-root"></div>
 <script type="text/javascript">
@@ -25,6 +26,8 @@ module Eukaliptus
       });
 
       FB.Canvas.setAutoResize(100);
+      
+      #{append_to_init}
     };
 
     (function() {
