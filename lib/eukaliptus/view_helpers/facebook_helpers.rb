@@ -75,6 +75,24 @@ module Eukaliptus
       
       js.html_safe
     end
+    
+    def on_fb_init(&block)
+      <<-DATA
+        <script>
+          (function() {
+            var oldFBInit = window.fbAsyncInit,
+            var fn = function() {
+              if (typeof(oldFBInit) === "function") {
+                oldFBInit();
+              }
+              #{yield}
+            }
+            
+            FB ? fn() : (window.fbAsyncInit = fn);
+          }())
+        </script>      
+      DATA
+    end
 
     # Function to create a new FB.ui dialog link
     def fb_ui(name, options ={})
