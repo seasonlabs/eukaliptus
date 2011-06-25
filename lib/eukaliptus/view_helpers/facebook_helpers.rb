@@ -88,7 +88,7 @@ module Eukaliptus
               #{script}
             }
             
-            FB ? fn() : (window.fbAsyncInit = fn);
+            typeof(FB) !== "undefined" ? fn() : (window.fbAsyncInit = fn);
           }())
         </script>      
       DATA
