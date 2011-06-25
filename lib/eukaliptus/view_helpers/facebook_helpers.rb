@@ -47,28 +47,26 @@ module Eukaliptus
       }, {perms: perms});
     }
 
+    var fixSession = function(fbSession, targetUrl) {
+      $("body").prepend('<form id="fixSession"></form>');
 
+      var f = $('form')[0];
+      f.method = 'POST';
+      f.action = "/cookie_fix";
+          var m = document.createElement('input');
+          m.setAttribute('type', 'hidden');
+          m.setAttribute('name', '_session_id');
+          m.setAttribute('value', fbSession);
+          f.appendChild(m);
 
-  function fixSession(fbSession, targetUrl) {
-    $("body").prepend('<form id="fixSession"></form>');
+          m = document.createElement('input');
+          m.setAttribute('type', 'hidden');
+          m.setAttribute('name', 'redirect_to');
+          m.setAttribute('value', targetUrl);
+          f.appendChild(m);
 
-    var f = $('form')[0];
-    f.method = 'POST';
-    f.action = "/cookie_fix";
-        var m = document.createElement('input');
-        m.setAttribute('type', 'hidden');
-        m.setAttribute('name', '_session_id');
-        m.setAttribute('value', fbSession);
-        f.appendChild(m);
-
-        m = document.createElement('input');
-        m.setAttribute('type', 'hidden');
-        m.setAttribute('name', 'redirect_to');
-        m.setAttribute('value', targetUrl);
-        f.appendChild(m);
-
-    f.submit();
-  }
+      f.submit();
+    }
 </script>
       DATA
       
