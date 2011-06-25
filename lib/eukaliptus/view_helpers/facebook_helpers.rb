@@ -79,7 +79,7 @@ module Eukaliptus
       js.html_safe
     end
     
-    def on_fb_init(script = nil, &script_block)
+    def with_fb(script = nil, &script_block)
       code = script_block.try(:call) || script || ""
       scriptlet = <<-DATA
         <script>
