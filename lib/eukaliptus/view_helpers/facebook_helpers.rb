@@ -11,69 +11,92 @@ module Eukaliptus
     # Accepts the permissions that your application needs to work.
     # Use the second parameter to inject some JS that will be executed in fbAsyncInit.
     #
-    # Use it one time in your layout header or use it in several app places
+    # Use it one time in your layout header for all pages, or add it to individual templates 
     # to ask the user for different permissions depending on the context, page, etc.
-    def fb_init(perms = %w{email publish_stream}, append_to_init = "")
+    def fb_init(options = {})
+      perms = (options[:perms] || %w{email publish_stream}).join(",")
+      locale = options[:locale] || "es_ES"
+
       js = <<-DATA
-<div id="fb-root"></div>
-<script type="text/javascript">
-    window.fbAsyncInit = function() {
-      FB.init({
-          appId: '#{Facebook::APP_ID.to_s}',
-          status: true,
-          cookie: true,
-          xfbml: true
-      });
+        <div id="fb-root"></div>
+        <script type="text/javascript">
+          window.fbAsyncInit = function() {
+            FB.init({
+                appId: '#{Facebook::APP_ID.to_s}',
+                status: true,
+                cookie: true,
+                xfbml: true
+            });
 
-      FB.Canvas.setAutoResize(100);
-      
-      #{append_to_init}
-    };
+            FB.Canvas.setAutoResize(100);
 
-    (function() {
-      var e = document.createElement('script'); e.async = true;
-      e.src = document.location.protocol +
-      '//connect.facebook.net/es_ES/all.js';
-      document.getElementById('fb-root').appendChild(e);
-    }());
+            #{options[:append_to_init]}
+          };
 
-    var login = function(targetUrl, perms) {
-      if (perms == null) {
-        perms = "#{perms.join(',')}"
-      }
-      FB.login(function(response) {
-        if (response.session) {
-            fixSession(JSON.stringify(response.session), targetUrl);
-        } else {
-            //pending to do when not logged in
-        }
-      }, {perms: perms});
-    }
+          (function() {
+            var e = document.createElement('script'); e.async = true;
+            e.src = document.location.protocol +
+            '//connect.facebook.net/#{locale}/all.js';
+            document.getElementById('fb-root').appendChild(e);
+          }());
 
-    var fixSession = function(fbSession, targetUrl) {
-      $("body").prepend('<form id="fixSession"></form>');
+          var login = function(targetUrl, perms) {
+            if (perms == null) {
+              perms = "#{perms}"
+            }
+            FB.login(function(response) {
+              if (response.session) {
+                fixSession(JSON.stringify(response.session), targetUrl);
+                } else {
+                  //pending to do when not logged in
+                }
+            }, {perms: perms});
+          }
 
-      var f = $('form')[0];
-      f.method = 'POST';
-      f.action = "/cookie_fix";
-          var m = document.createElement('input');
-          m.setAttribute('type', 'hidden');
-          m.setAttribute('name', '_session_id');
-          m.setAttribute('value', fbSession);
-          f.appendChild(m);
+          var fixSession = function(fbSession, targetUrl) {
+            $("body").prepend('<form id="fixSession"></form>');
 
-          m = document.createElement('input');
-          m.setAttribute('type', 'hidden');
-          m.setAttribute('name', 'redirect_to');
-          m.setAttribute('value', targetUrl);
-          f.appendChild(m);
+            var f = $('form')[0];
+            f.method = 'POST';
+            f.action = "/cookie_fix";
+            var m = document.createElement('input');
+            m.setAttribute('type', 'hidden');
+            m.setAttribute('name', '_session_id');
+            m.setAttribute('value', fbSession);
+            f.appendChild(m);
 
-      f.submit();
-    }
-</script>
+            m = document.createElement('input');
+            m.setAttribute('type', 'hidden');
+            m.setAttribute('name', 'redirect_to');
+            m.setAttribute('value', targetUrl);
+            f.appendChild(m);
+
+            f.submit();
+          }
+        </script>
       DATA
       
       js.html_safe
+    end
+    
+    def with_fb(script = nil, &script_block)
+      code = script_block.try(:call) || script || ""
+      scriptlet = <<-DATA
+        <script>
+          (function() {
+            var oldFBInit = window.fbAsyncInit;
+            var fn = function() {
+              if (typeof(oldFBInit) === "function") {
+                oldFBInit();
+              }
+              #{code}
+            }
+            
+            typeof(FB) !== "undefined" ? fn() : (window.fbAsyncInit = fn);
+          }())
+        </script>      
+      DATA
+      scriptlet.html_safe
     end
 
     # Function to create a new FB.ui dialog link
