@@ -37,7 +37,7 @@ Your rails application must be using jQuery as it will be the default JS library
 
 Just behind the <body> tag in your application.html.erb write:
     
-    <%= fb_login %>
+    <%= fb_init %>
     
 This generates the necessary JS code to perform request to Eukaliptus that fixes cookies security problems involved in running iframe applications in Safari and IE6+
 
