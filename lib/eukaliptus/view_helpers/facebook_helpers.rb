@@ -76,7 +76,7 @@ module Eukaliptus
       js.html_safe
     end
     
-    def on_fb_init(&block)
+    def on_fb_init(script)
       <<-DATA
         <script>
           (function() {
@@ -85,7 +85,7 @@ module Eukaliptus
               if (typeof(oldFBInit) === "function") {
                 oldFBInit();
               }
-              #{yield}
+              #{script}
             }
             
             FB ? fn() : (window.fbAsyncInit = fn);
