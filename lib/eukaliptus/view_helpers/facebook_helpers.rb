@@ -15,7 +15,7 @@ module Eukaliptus
     # to ask the user for different permissions depending on the context, page, etc.
     def fb_init(options = {})
       perms = (options[:perms] || %w{email publish_stream}).join(",")
-      locale = options[:locale] || "es_ES"
+      locale = options[:locale] || "en_US"
 
       js = <<-DATA
         <div id="fb-root"></div>
