@@ -1,5 +1,10 @@
 module Eukaliptus
   module FacebookHelpers
+    #Deprecated
+    def fb_login(perms = %w{email publish_stream})
+      raise 'fb_login is a deprecated method. Please use use fb_init instead.'
+    end
+    
     # Renders the HTML + JS that enables the app to log in to Facebook using
     # the Javascript method.
     #
@@ -7,7 +12,7 @@ module Eukaliptus
     #
     # Use it one time in your layout header or use it in several app places
     # to ask the user for different permissions depending on the context, page, etc.
-    def fb_login(perms = %w{email publish_stream})
+    def fb_init(perms = %w{email publish_stream})
       js = <<-DATA
 <div id="fb-root"></div>
 <script type="text/javascript">
