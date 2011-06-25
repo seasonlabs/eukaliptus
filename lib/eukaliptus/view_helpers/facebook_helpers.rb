@@ -77,10 +77,10 @@ module Eukaliptus
     end
     
     def on_fb_init(script)
-      <<-DATA
+      scriptlet = <<-DATA
         <script>
           (function() {
-            var oldFBInit = window.fbAsyncInit,
+            var oldFBInit = window.fbAsyncInit;
             var fn = function() {
               if (typeof(oldFBInit) === "function") {
                 oldFBInit();
@@ -92,6 +92,7 @@ module Eukaliptus
           }())
         </script>      
       DATA
+      scriptlet.html_safe
     end
 
     # Function to create a new FB.ui dialog link
