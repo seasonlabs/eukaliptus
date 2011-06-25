@@ -29,8 +29,6 @@ module Eukaliptus
             });
 
             FB.Canvas.setAutoResize(100);
-
-            #{options[:append_to_init]}
           };
 
           (function() {
