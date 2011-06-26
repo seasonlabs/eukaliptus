@@ -17,7 +17,7 @@ module Eukaliptus
       @response = Rack::Response.new body, status, headers
 
       # Fixes IE security bug
-      @response.header["P3P"] = 'CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"'
+      @response.header["P3P"] = 'CP="HONK HONK! http://graeme.per.ly/p3p-policies-are-a-joke"'
 
       if env['PATH_INFO'] == '/cookie_fix'
         cookie_fix(env)
