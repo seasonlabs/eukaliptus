@@ -47,8 +47,31 @@ Then you can place a link anywhere in your code that gives the user the chance t
 
 == Helpers
 
-Al helpers are namespaced with fb_ prefix you can find the documentation in  this file lib/eukaliptus/view_helpers/facebook_helpers.rb
+All helpers are namespaced with fb_ prefix you can find the documentation in  this file lib/eukaliptus/view_helpers/facebook_helpers.rb
     
+== Authentication 
+
+=== Koala
+
+We recomend using JavaScript authentication with Koala and it's very easy to implement. 
+
+See the Authentication section in Koala Wiki https://github.com/arsduo/koala/wiki/Koala-on-Rails 
+
+=== Omniauth + Devise
+
+Eukaliptus will be aware that you are using Omniauth and changes the redirection workflow. 
+
+Implement the authentication as explained in Devise Wiki https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview
+
+Then in your OmniauthCallbacksController you will be getting a new get param :redirect_to you can add this at the end of your provider action:
+
+  ...
+  redirect_to params[:redirect_to] and return
+  
+You can use Koala in the mix too and instantiate a new Koala GraphAPI object as follows:
+  
+  Koala::Facebook::GraphAPI.new(env["omniauth.auth"]['credentials']['token'])
+
 == Copyright
 
 Copyright (c) 2011 Season Advertising S.L. http://www.season.es
