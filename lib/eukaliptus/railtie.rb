@@ -23,7 +23,6 @@ module Eukaliptus
 
       if config_file.file?
         CONFIG = YAML.load_file(config_file)[Rails.env]
-        Facebook::API_KEY = CONFIG['app_id']
         Facebook::APP_ID = CONFIG['app_id']
         Facebook::SECRET = CONFIG['secret_key']
         Facebook::HOST = CONFIG['host']
