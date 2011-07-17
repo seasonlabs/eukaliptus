@@ -3,11 +3,11 @@ Bundler::GemHelper.install_tasks
 
 require 'rubygems'
 require 'rake/testtask'
-require 'rake/rdoctask'
+#require 'rdoc/task'
 
 task :default => :test
 
-desc 'Test the typus plugin.'
+desc 'Test the gem.'
 Rake::TestTask.new(:test) do |t|
   t.libs << 'lib'
   t.libs << 'test'
