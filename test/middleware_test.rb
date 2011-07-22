@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TestEukaliptus < MiniTest::Unit::TestCase
+class MiddlewareTest < MiniTest::Unit::TestCase
   include Rack::Test::Methods
   
   def app
