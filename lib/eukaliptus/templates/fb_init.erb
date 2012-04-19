@@ -18,9 +18,9 @@
     document.getElementById('fb-root').appendChild(e);
   }());
 
-  var login = function(targetUrl, perms) {
-    if (perms == null) {
-      perms = "<%= perms %>"
+  var login = function(targetUrl, scope) {
+    if (scope == null) {
+      scope = "<%= scope %>"
     }
     FB.login(function(response) {
       if (response.session) {
@@ -28,7 +28,7 @@
         } else {
           //pending to do when not logged in
         }
-    }, {perms: perms});
+    }, {scope: scope});
   }
 
   var fixSession = function(fbSession, targetUrl) {
